@@ -2,11 +2,21 @@ import { Container, SubTitle, Title } from './App.styled';
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
-import { getContacts } from 'redux/selectors';
-import { useSelector } from 'react-redux';
+import { selectContacts, selectIsLoading } from 'redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/operations';
+import { Loader } from './Loader';
 
 export const App = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
   return (
     <Container>
       <Title>Phonebook</Title>
@@ -14,6 +24,7 @@ export const App = () => {
       <SubTitle>Contacts</SubTitle>
 
       <Filter />
+      {isLoading && <Loader />}
       {contacts.length > 0 && <ContactList />}
     </Container>
   );

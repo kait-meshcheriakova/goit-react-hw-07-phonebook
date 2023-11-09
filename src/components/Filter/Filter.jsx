@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Div, Label, Input } from './Filter.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilter } from 'redux/selectors';
+import { selectFilter } from 'redux/selectors';
 import { changeFilter } from 'redux/filterSlice';
 
 function Filter() {
@@ -16,7 +16,7 @@ function Filter() {
         Find contacts by name
         <Input
           type="text"
-          value={useSelector(getFilter)}
+          value={useSelector(selectFilter)}
           onChange={handleFilterChange}
         />
       </Label>
